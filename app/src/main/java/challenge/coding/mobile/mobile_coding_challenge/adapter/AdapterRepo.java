@@ -15,18 +15,17 @@ import java.util.List;
 
 import challenge.coding.mobile.mobile_coding_challenge.R;
 import challenge.coding.mobile.mobile_coding_challenge.model.MostStarredRepo;
+import challenge.coding.mobile.mobile_coding_challenge.model.Repository;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class AdapterRepo extends RecyclerView.Adapter<AdapterRepo.MyViewHolder>{
 
     private Context mContext;
-    private List<MostStarredRepo> repos;
-    AppCompatActivity act;
-    public AdapterRepo(AppCompatActivity act,Context mContext,List<MostStarredRepo> repos)
+    private List<Repository> repos;
+    public AdapterRepo(Context mContext,List<Repository> repos)
     {
         this.mContext = mContext;
         this.repos = repos;
-        this.act=act;
     }
 
     @Override
@@ -39,17 +38,14 @@ public class AdapterRepo extends RecyclerView.Adapter<AdapterRepo.MyViewHolder>{
     @Override
     public  void onBindViewHolder(final AdapterRepo.MyViewHolder viewHolder, int i)
     {
-        /*viewHolder.text.setText(movieList.get(i).getText());
+        viewHolder.repo_name.setText(repos.get(i).getFull_name());
+        viewHolder.repo_desc.setText(repos.get(i).getDescription());
+        viewHolder.owner_name.setText(repos.get(i).getOwner().getLogin());
+        viewHolder.repo_stars.setText(String.valueOf(repos.get(i).getStargazers_count()));
 
-        viewHolder.user_name.setText(movieList.get(i).getFname());
+        Glide.with(mContext).load(repos.get(i).getOwner().getAvatar_url()).placeholder(R.drawable.load)
+                .into(viewHolder.avatar);
 
-        Glide.with(mContext).load(movieList.get(i).getphoto()).placeholder(R.drawable.load)
-                .into(viewHolder.icon_user);
-
-        if(currentUser!=null && currentUser.getPhotoUrl().toString().equals(movieList.get(i).getphoto()))
-        {
-            viewHolder.icon_trash.setVisibility(View.VISIBLE);
-        }*/
     }
     @Override
     public int getItemCount()
@@ -59,32 +55,16 @@ public class AdapterRepo extends RecyclerView.Adapter<AdapterRepo.MyViewHolder>{
 
     public  class MyViewHolder extends RecyclerView.ViewHolder
     {
-       public TextView user_name,text;
-        public ImageView icon_trash;
-        public CircleImageView icon_user;
+       public TextView repo_name,repo_desc,owner_name,repo_stars;
+        public CircleImageView avatar;
         public MyViewHolder(View view)
         {
             super(view);
-             /*text = (TextView) view.findViewById(R.id.text);
-            user_name = (TextView) view.findViewById(R.id.user_name);
-            icon_user = view.findViewById(R.id.icon_user);
-            icon_trash=(ImageView)view.findViewById(R.id.icon_trash);
-            icon_trash.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    int pos = getAdapterPosition();
-                    if(pos != RecyclerView.NO_POSITION)
-                    {
-                        FirebaseDatabase.getInstance().getReference().child(path+lst_id_cmt.get(pos)+"/").removeValue();
-                        lst_id_cmt.remove(pos);
-                        movieList.remove(pos);
-                        CommentAdapter.this.notifyDataSetChanged();
-                        ExplosionField mExplosionField  = ExplosionField.attach2Window(act);
-                        mExplosionField.explode(view);
-                    }
-
-                }
-            });*/
+            repo_name =  view.findViewById(R.id.repo_name);
+            repo_desc = view.findViewById(R.id.repo_desc);
+            owner_name = view.findViewById(R.id.owner_name);
+            repo_stars =  view.findViewById(R.id.repo_stars);
+            avatar =  view.findViewById(R.id.avatar);
         }
     }
 
