@@ -41,11 +41,18 @@ public class AdapterRepo extends RecyclerView.Adapter<AdapterRepo.MyViewHolder>{
         viewHolder.repo_name.setText(repos.get(i).getFull_name());
         viewHolder.repo_desc.setText(repos.get(i).getDescription());
         viewHolder.owner_name.setText(repos.get(i).getOwner().getLogin());
-        viewHolder.repo_stars.setText(String.valueOf(repos.get(i).getStargazers_count()));
+        viewHolder.repo_stars.setText(withSuffix(repos.get(i).getStargazers_count()));
 
         Glide.with(mContext).load(repos.get(i).getOwner().getAvatar_url()).placeholder(R.drawable.load)
                 .into(viewHolder.avatar);
 
+    }
+    public static String withSuffix(long count) {
+        if (count < 1000) return "" + count;
+        int exp = (int) (Math.log(count) / Math.log(1000));
+        return String.format("%.1f %c",
+                count / Math.pow(1000, exp),
+                "kMGTPE".charAt(exp-1));
     }
     @Override
     public int getItemCount()
